@@ -1,0 +1,5 @@
+<div class='points-map' ng-controller="PointsCtrl">
+    <div ng-repeat="point in ctrl.points" ng-show="point.status" class="point point-{{point.type}}" style="left:{{point.x}};top:{{point.y}};">
+        <div class="content" ng-bind-html="point.content"></div>
+    </div>
+</div>

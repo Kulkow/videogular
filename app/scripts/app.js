@@ -67,6 +67,11 @@ angular.module('myApp',
                     controller: 'MultiPlayersCtrl',
                     controllerAs: "ctrl"
                 })
+                .when('/points', {
+                    templateUrl: 'views/points.html',
+                    controller: 'PointsCtrl',
+                    controllerAs: "ctrl"
+                })
                 .when('/virtual-clips', {
                     templateUrl: 'views/virtual-clips.html',
                     controller: 'VirtualClipsCtrl',

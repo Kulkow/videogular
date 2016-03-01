@@ -1,0 +1,10 @@
+<div class="menu" ng-init="actions=[{icon:'left',},
+                            {icon:'right',}
+                            {icon:'top',}
+                            ]">
+    <ul>
+        <li ng-repeat="li in actions">
+            <a href="#/" ng-class="{selected: ('/' == $location.path())}">Main</a>
+        </li>
+    </ul>
+</div>
