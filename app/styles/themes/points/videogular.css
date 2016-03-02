@@ -471,15 +471,64 @@ videogular, [videogular] {
       videogular points-map-plugin .points-map .point, [videogular] points-map-plugin .points-map .point {
         display: block;
         position: absolute;
-        border: 1px solid #000;
-        border-radius: 3px;
-        padding: 3px;
-        background: #fff;
-        opacity: 0.7; }
+        opacity: 0.4;
+        background: #fff; }
+        videogular points-map-plugin .points-map .point.point:before, [videogular] points-map-plugin .points-map .point.point:before {
+          content: "";
+          background: url("images/sprite_icon_50.png") no-repeat 0 0;
+          width: 50px;
+          height: 50px;
+          display: block; }
+        videogular points-map-plugin .points-map .point.point.point-comment:before, [videogular] points-map-plugin .points-map .point.point.point-comment:before {
+          background-position: 0 3px; }
+        videogular points-map-plugin .points-map .point.point.point-left:before, [videogular] points-map-plugin .points-map .point.point.point-left:before {
+          background-position: 0 -53px; }
+        videogular points-map-plugin .points-map .point.point.point-up:before, [videogular] points-map-plugin .points-map .point.point.point-up:before {
+          background-position: 0 -105px; }
+        videogular points-map-plugin .points-map .point.point.point-left_up:before, [videogular] points-map-plugin .points-map .point.point.point-left_up:before {
+          background-position: 0 -160px; }
+        videogular points-map-plugin .points-map .point.point.point-right_up:before, [videogular] points-map-plugin .points-map .point.point.point-right_up:before {
+          background-position: 0 -210px; }
+        videogular points-map-plugin .points-map .point.point.point-down:before, [videogular] points-map-plugin .points-map .point.point.point-down:before {
+          background-position: 0 -260px; }
+        videogular points-map-plugin .points-map .point.point.point-right_down:before, [videogular] points-map-plugin .points-map .point.point.point-right_down:before {
+          background-position: 0 -310px; }
+        videogular points-map-plugin .points-map .point.point.point-left_down:before, [videogular] points-map-plugin .points-map .point.point.point-left_down:before {
+          background-position: 0 -365px; }
+        videogular points-map-plugin .points-map .point.point.point-right:before, [videogular] points-map-plugin .points-map .point.point.point-right:before {
+          background-position: 0 -417px; }
 
 .container-points .left-sidebar ul {
   display: block; }
-  .container-points .left-sidebar ul li .icon {
-    background: url("images-"); }
+  .container-points .left-sidebar ul li {
+    position: relative;
+    list-style: none; }
+    .container-points .left-sidebar ul li .icon {
+      position: relative;
+      display: block; }
+      .container-points .left-sidebar ul li .icon:before {
+        content: "";
+        background: url("images/sprite_icon_50.png") no-repeat 0 0;
+        width: 50px;
+        height: 50px;
+        display: block; }
+      .container-points .left-sidebar ul li .icon.icon-comment:before {
+        background-position: 0 3px; }
+      .container-points .left-sidebar ul li .icon.icon-left:before {
+        background-position: 0 -53px; }
+      .container-points .left-sidebar ul li .icon.icon-up:before {
+        background-position: 0 -105px; }
+      .container-points .left-sidebar ul li .icon.icon-left_up:before {
+        background-position: 0 -160px; }
+      .container-points .left-sidebar ul li .icon.icon-right_up:before {
+        background-position: 0 -210px; }
+      .container-points .left-sidebar ul li .icon.icon-down:before {
+        background-position: 0 -260px; }
+      .container-points .left-sidebar ul li .icon.icon-right_down:before {
+        background-position: 0 -310px; }
+      .container-points .left-sidebar ul li .icon.icon-left_down:before {
+        background-position: 0 -365px; }
+      .container-points .left-sidebar ul li .icon.icon-right:before {
+        background-position: 0 -417px; }
 
 /*# sourceMappingURL=videogular.css.map */

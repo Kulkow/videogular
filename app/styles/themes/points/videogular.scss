@@ -649,11 +649,55 @@ videogular, [videogular] {
             .point{
                 display: block;
                 position: absolute;
-                border: 1px solid #000;
-                border-radius: 3px;
-                padding: 3px;
+                opacity: 0.4;
                 background: #fff;
-                opacity: 0.7;
+
+                &.point{
+
+                    &:before{
+                        content:"";
+                        background: url('images/sprite_icon_50.png') no-repeat 0 0;
+                        width:50px;
+                        height: 50px;
+                        display: block;
+                    }
+
+                    &.point-comment:before{
+                        background-position: 0 3px;
+                    }
+
+                    &.point-left:before{
+                        background-position: 0 -53px;
+                    }
+
+                    &.point-up:before{
+                        background-position: 0 -105px;
+                    }
+
+                    &.point-left_up:before{
+                        background-position: 0 -160px;
+                    }
+
+                    &.point-right_up:before{
+                        background-position: 0 -210px;
+                    }
+
+                    &.point-down:before{
+                        background-position: 0 -260px;
+                    }
+
+                    &.point-right_down:before{
+                        background-position: 0 -310px;
+                    }
+
+                    &.point-left_down:before{
+                        background-position: 0 -365px;
+                    }
+
+                    &.point-right:before{
+                        background-position: 0 -417px;
+                    }
+                }
             }
         }
     }
@@ -665,8 +709,56 @@ videogular, [videogular] {
             display: block;
 
             li{
+                position: relative;
+                list-style: none;
+
                 .icon{
-                    background: url('images-');
+                    position: relative;
+                    display: block;
+
+                    &:before{
+                        content:"";
+                        background: url('images/sprite_icon_50.png') no-repeat 0 0;
+                        width:50px;
+                        height: 50px;
+                        display: block;
+                    }
+
+                    &.icon-comment:before{
+                        background-position: 0 3px;
+                    }
+
+                    &.icon-left:before{
+                        background-position: 0 -53px;
+                    }
+
+                    &.icon-up:before{
+                        background-position: 0 -105px;
+                    }
+
+                    &.icon-left_up:before{
+                        background-position: 0 -160px;
+                    }
+
+                    &.icon-right_up:before{
+                        background-position: 0 -210px;
+                    }
+
+                    &.icon-down:before{
+                        background-position: 0 -260px;
+                    }
+
+                    &.icon-right_down:before{
+                        background-position: 0 -310px;
+                    }
+
+                    &.icon-left_down:before{
+                        background-position: 0 -365px;
+                    }
+
+                    &.icon-right:before{
+                        background-position: 0 -417px;
+                    }
                 }
             }
         }
