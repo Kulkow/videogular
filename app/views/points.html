@@ -42,11 +42,11 @@
             </div>
             <div class="options-block">
                 <div class="form-group option-block">
-                    <select id="select-speed" ng-model="ctrl.playbackSelected" ng-change="ctrl.onChangePlayback()">
-                        <option value="0.5">x0.5</option>
-                        <option value="1" selected="selected">x1</option>
-                        <option value="1.5">x1.5</option>
-                        <option value="2">x2</option>
+                    <select name="playbackSelected" id="select-speed"
+                            ng-model="ctrl.playbackSelected"
+                            ng-change="ctrl.onChangePlayback()"
+                            ng-options="item as item.name for item in ctrl.availablePlaybacks track by item.value"
+                    >
                     </select>
                     <label for="select-speed">Select speed</label>
                 </div>

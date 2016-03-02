@@ -4,7 +4,14 @@ angular.module('myApp').controller('PointsCtrl',
         this.consoleCuePointsMessages = "click play to see cue points bindings!\n";
         this.API = null;
         this.chapterSelected = {};
-        this.playbackSelected = {value :1};
+        this.availablePlaybacks = [
+            {value: '0.5', name: 'x0.5'},
+            {value: '1', name: 'x1'},
+            {value: '1.5', name: 'x1.5'},
+            {value: '2', name: 'x2'},
+        ];
+        this.playbackSelected = this.availablePlaybacks[1];
+
         this.pointsUrl = '/ajax/points.php';
         this.points = [];
         this.sync = 0;
@@ -127,10 +134,10 @@ angular.module('myApp').controller('PointsCtrl',
             if(this.sync){
                 for(var i in this.videosAPI){
                     var VAPI = this.videosAPI[i];
-                    VAPI.setPlayback(this.playbackSelected);
+                    VAPI.setPlayback(this.playbackSelected.value);
                 }
             }else{
-                this.API.setPlayback(this.playbackSelected);
+                this.API.setPlayback(this.playbackSelected.value);
             }
         };
 
