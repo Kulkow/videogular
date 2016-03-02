@@ -4,6 +4,7 @@ angular.module('myApp').controller('PointsCtrl',
         this.consoleCuePointsMessages = "click play to see cue points bindings!\n";
         this.API = null;
         this.chapterSelected = {};
+        this.playbackSelected = {value :1};
         this.pointsUrl = '/ajax/points.php';
         this.points = [];
         this.sync = 0;
@@ -122,6 +123,17 @@ angular.module('myApp').controller('PointsCtrl',
             this.API.seekTime(this.chapterSelected.value);
         };
 
+        this.onChangePlayback = function onChangePlayback() {
+            if(this.sync){
+                for(var i in this.videosAPI){
+                    var VAPI = this.videosAPI[i];
+                    VAPI.setPlayback(this.playbackSelected);
+                }
+            }else{
+                this.API.setPlayback(this.playbackSelected);
+            }
+        };
+
         this.setPoints = function(points){
             this.points = points;
             this.setcuePoints();
@@ -153,6 +165,7 @@ angular.module('myApp').controller('PointsCtrl',
 
         this.thumbnails = "assets/thumbnails/thumbnail.jpg";
         this.commonConfig = {
+            crossorigin: "anonymous",
             playsInline: false,
             autoHide: false,
             autoHideTime: 3000,

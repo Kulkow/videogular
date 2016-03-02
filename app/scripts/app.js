@@ -17,9 +17,14 @@ angular.module('myApp',
     .config(
         function ($routeProvider) {
             $routeProvider
-                .when('/', {
+                .when('/main', {
                     templateUrl: 'views/main.html',
                     controller: 'MainCtrl',
+                    controllerAs: "ctrl"
+                })
+                .when('/', {
+                    templateUrl: 'views/points.html',
+                    controller: 'PointsCtrl',
                     controllerAs: "ctrl"
                 })
                 .when('/audio', {

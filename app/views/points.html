@@ -8,6 +8,7 @@
             <div class="videogular-container-points">
                 <videogular vg-player-ready="ctrl.onPlayerReady($API,'left')"
                             vg-theme="config.theme.url"
+                            vg-crossorigin="config.crossorigin"
                             vg-cue-points="config.cuePoints"
                             vg-update-state="ctrl.onUpdateState($state,'left')"
                             vg-update-time="ctrl.onUpdateTime($currentTime, $duration)"
@@ -25,6 +26,7 @@
                                                      vg-cue-points="config.cuePoints.chapters"></vg-scrub-bar-cue-points>
                         </vg-scrub-bar>
                         <vg-time-display>{{ timeLeft | date:'mm:ss' }}</vg-time-display>
+                        <vg-playback-button></vg-playback-button>
                         <vg-volume>
                             <vg-mute-button></vg-mute-button>
                             <vg-volume-bar></vg-volume-bar>
@@ -37,41 +39,56 @@
                     <vg-overlay-play></vg-overlay-play>
                     <points-map-plugin></points-map-plugin>
                 </videogular>
-                <div class="checkbox">
+            </div>
+            <div class="options-block">
+                <div class="form-group option-block">
+                    <select id="select-speed" ng-model="ctrl.playbackSelected" ng-change="ctrl.onChangePlayback()">
+                        <option value="0.5">x0.5</option>
+                        <option value="1" selected="selected">x1</option>
+                        <option value="1.5">x1.5</option>
+                        <option value="2">x2</option>
+                    </select>
+                    <label for="select-speed">Select speed</label>
+                </div>
+                <div class="checkbox option-block">
                     <label>
-                        <input  ng-change="ctrl.setSync" ng-model="ctrl.sync" type="checkbox" name="sync" value="1" />
+                        <input  ng-model="ctrl.sync" type="checkbox" name="sync" value="1" />
                         Synchronously
                     </label>
                 </div>
             </div>
         </div>
         <div class="col-lg-5">
-            <videogular vg-theme="ctrl.videoConfigsRight.theme"
-                        vg-loop="ctrl.videoConfigsRight.loop"
-                        vg-player-ready="ctrl.onPlayerReady($API,'right')"
-                        vg-update-state="ctrl.onUpdateState($state,'right')"
-                        >
-                <vg-media vg-src="ctrl.videoConfigsRight.sources">
-                </vg-media>
-                <vg-controls vg-autohide="ctrl.videoConfigsRight.autoHide" vg-autohide-time="ctrl.videoConfigsRight.autoHideTime">
-                    <vg-play-pause-button></vg-play-pause-button>
-                    <vg-time-display>{{ currentTime | date:'mm:ss' }}</vg-time-display>
-                    <vg-scrub-bar>
-                        <vg-scrub-bar-buffer></vg-scrub-bar-buffer>
-                        <vg-scrub-bar-current-time></vg-scrub-bar-current-time>
-                    </vg-scrub-bar>
-                    <vg-time-display>{{ timeLeft | date:'mm:ss' }}</vg-time-display>
-                    <vg-volume>
-                        <vg-mute-button></vg-mute-button>
-                        <vg-volume-bar></vg-volume-bar>
-                    </vg-volume>
-                    <vg-fullscreen-button></vg-fullscreen-button>
-                </vg-controls>
+            <div class="videogular-container-points">
+                <videogular vg-theme="ctrl.videoConfigsRight.theme"
+                            vg-loop="ctrl.videoConfigsRight.loop"
+                            vg-player-ready="ctrl.onPlayerReady($API,'right')"
+                            vg-update-state="ctrl.onUpdateState($state,'right')"
+                            vg-crossorigin="ctrl.videoConfigsRight.crossorigin"
+                            >
+                    <vg-media vg-src="ctrl.videoConfigsRight.sources">
+                    </vg-media>
+                    <vg-controls vg-autohide="ctrl.videoConfigsRight.autoHide" vg-autohide-time="ctrl.videoConfigsRight.autoHideTime">
+                        <vg-play-pause-button></vg-play-pause-button>
+                        <vg-time-display>{{ currentTime | date:'mm:ss' }}</vg-time-display>
+                        <vg-scrub-bar>
+                            <vg-scrub-bar-buffer></vg-scrub-bar-buffer>
+                            <vg-scrub-bar-current-time></vg-scrub-bar-current-time>
+                        </vg-scrub-bar>
+                        <vg-time-display>{{ timeLeft | date:'mm:ss' }}</vg-time-display>
+                        <vg-playback-button></vg-playback-button>
+                        <vg-volume>
+                            <vg-mute-button></vg-mute-button>
+                            <vg-volume-bar></vg-volume-bar>
+                        </vg-volume>
+                        <vg-fullscreen-button></vg-fullscreen-button>
+                    </vg-controls>
 
-                <vg-poster vg-url='ctrl.videoConfigsRight.plugins.poster.url'></vg-poster>
-                <vg-buffering></vg-buffering>
-                <vg-overlay-play></vg-overlay-play>
-            </videogular>
+                    <vg-poster vg-url='ctrl.videoConfigsRight.plugins.poster.url'></vg-poster>
+                    <vg-buffering></vg-buffering>
+                    <vg-overlay-play></vg-overlay-play>
+                </videogular>
+            </div>
         </div>
         <div class="col-lg-1">
         </div>
