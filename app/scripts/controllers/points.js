@@ -3,69 +3,86 @@ angular.module('myApp').controller('PointsCtrl',
     function ($sce,$http) {
         this.consoleCuePointsMessages = "click play to see cue points bindings!\n";
         this.API = null;
-        this.barChartStyle = {};
-        this.textStyle = {};
         this.chapterSelected = {};
-
         this.pointsUrl = '/ajax/points.php';
-
         this.points = [];
+        this.sync = 0;
+        this.videosAPI = [];
 
-        var ctrl = this;
+        this.onUpdateState = function (state, type) {
+            this.state = state;
+            var sync_type = ('left' == type ? 'right' : 'left')
+            var VAPI = this.videosAPI[sync_type];
+            if(this.sync){
+                if(VAPI.currentState != state){
+                    VAPI.currentState = state;
+                    switch (state) {
+                        case 'play':
+                            VAPI.play()
+                            break;
 
-        this.onPlayerReady = function (API) {
-            this.API = API;
-            var data = {'id' : 11, 'user' : 10};
-            var config = {}
-            $http.post(this.pointsUrl, data, config).then(function(response){
-                ctrl.setPoints(response.data.points);
-            }, function(){
-            });
+                        case 'pause':
+                            VAPI.pause();
+                            break;
+
+                        case 'stop':
+                            VAPI.stop();
+                            break;
+                    }
+                }
+            }
         };
 
-        this.onPlayerReadyRight = function (API) {
+        var ctrl = this;
+        this.onPlayerReady = function (API, type) {
             this.API = API;
-        }
+            this.videosAPI[type] = API;
 
-        this.config = {};
-        this.config.sourcesRight = [
-            {
-                /*src: $sce.trustAsResourceUrl("http://static.videogular.com/assets/videos/videogular.mp4"),*/
-                src: $sce.trustAsResourceUrl("/assets/video/videogular.mp4"),
-                type: "video/mp4"
-            },
-            /*{
-             src: $sce.trustAsResourceUrl("http://static.videogular.com/assets/videos/videogular.ogg"),
-             type: "video/ogg"
-             },
-             {
-             src: $sce.trustAsResourceUrl("http://static.videogular.com/assets/videos/videogular.webm"),
-             type: "video/webm"
-             }*/
-        ]
+            var data = {'id' : 11, 'user' : 10};
+            var config = {};
+            if('left' == type) {
+                $http.post(this.pointsUrl, data, config).then(function (response) {
+                    ctrl.setPoints(response.data.points);
+                }, function () {
+                });
+            }
+        };
 
-
-
-
-        this.media = [
-            {
-                sources: [
+        this.media = {
+            left: [
                     {
-                        /*src: $sce.trustAsResourceUrl("http://static.videogular.com/assets/videos/videogular.mp4"),*/
                         src: $sce.trustAsResourceUrl("/assets/video/videogular.mp4"),
                         type: "video/mp4"
-                    },
-                    /*{
-                        src: $sce.trustAsResourceUrl("http://static.videogular.com/assets/videos/videogular.ogg"),
-                        type: "video/ogg"
-                    },
-                    {
-                        src: $sce.trustAsResourceUrl("http://static.videogular.com/assets/videos/videogular.webm"),
-                        type: "video/webm"
-                    }*/
+                    }
                 ],
-            }
+            right :  [
+                    {
+                        src: $sce.trustAsResourceUrl("/assets/video/videogular.mp4"),
+                        type: "video/mp4"
+                    }
+                ]
+            };
+
+        /**
+         * actions left menu
+         * */
+        var actions = [
+            'comment',
+            'left',
+            'left_up',
+            'up',
+            'right_up',
+            'right',
+            'right_down',
+            'down',
+            'left_down',
         ];
+        this.menu = [];
+        for (var i = 0, l = actions.length; i < l; i++) {
+            var action = actions[i];
+            this.menu.push({'icon' : action, 'url' : '/points/'+action,});
+        }
+
 
         this.defaulPointInterval = 5;
         //status points
@@ -91,10 +108,9 @@ angular.module('myApp').controller('PointsCtrl',
                 this.points[i].status = status;
             }
         }
-
         // Chapters
         this.onChaptersCuePoint = function onChaptersCuePoint(currentTime, timeLapse, params) {
-            this.chapterSelected = this.config.cuePoints.chapters[params.index];
+            this.chapterSelected = this.commonConfig.cuePoints.chapters[params.index];
         };
 
         this.onUpdateTime = function (currentTime, totalTime) {
@@ -105,24 +121,6 @@ angular.module('myApp').controller('PointsCtrl',
         this.onChangeChapter = function onChangeChapter() {
             this.API.seekTime(this.chapterSelected.value);
         };
-
-        var actions = [
-            'comment',
-            'left',
-            'left_up',
-            'up',
-            'right_up',
-            'right',
-            'right_down',
-            'down',
-            'left_down',
-        ];
-
-        this.menu = [];
-        for (var i = 0, l = actions.length; i < l; i++) {
-            var action = actions[i];
-            this.menu.push({'icon' : action, 'url' : '/points/'+action,});
-        }
 
         this.setPoints = function(points){
             this.points = points;
@@ -150,17 +148,16 @@ angular.module('myApp').controller('PointsCtrl',
                 }
                 _chapters.push(chapter);
             }
-            this.config.cuePoints  = {chapters : _chapters};
+            this.commonConfig.cuePoints  = {chapters : _chapters};
         }
 
         this.thumbnails = "assets/thumbnails/thumbnail.jpg";
-        this.config = {
+        this.commonConfig = {
             playsInline: false,
             autoHide: false,
             autoHideTime: 3000,
             autoPlay: false,
-            sources: this.media[0].sources,
-            tracks: this.media[0].tracks,
+            sources: this.media.left,
             loop: false,
             preload: "auto",
             controls: false,
@@ -174,6 +171,11 @@ angular.module('myApp').controller('PointsCtrl',
             },
         };
         this.setcuePoints();
+        this.videoConfigs = [this.commonConfig];
+
+        var config = angular.copy(this.commonConfig);
+        config.sources = this.media.right
+        this.videoConfigsRight = config;
     }
 ).directive("pointsMapPlugin",
     ["VG_STATES", function(VG_STATES) {

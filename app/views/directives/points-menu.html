@@ -1,5 +1,5 @@
-<div class="left-sidebar" ng-controller="PointsCtrl">
-    <ul>
+<div class="left-sidebar navbar-collapse collapse" ng-controller="PointsCtrl">
+    <ul class="nav navbar-nav">
         <li ng-repeat="item in ctrl.menu">
             <a href="#{{item.url}}" title="{{item.icon}}" class="icon icon-{{item.icon}}" ng-class="{selected: (item.url == $location.path())}"></a>
         </li>

@@ -711,17 +711,20 @@ videogular, [videogular] {
             li{
                 position: relative;
                 list-style: none;
+                width: 100%;
 
                 .icon{
                     position: relative;
                     display: block;
+                    padding: 5px 15px;
 
                     &:before{
                         content:"";
-                        background: url('images/sprite_icon_50.png') no-repeat 0 0;
-                        width:50px;
-                        height: 50px;
+                        background: url('images/sprite_icon_30.png') no-repeat 0 0;
+                        width: 30px;
+                        height: 30px;
                         display: block;
+                        margin: 0 auto;
                     }
 
                     &.icon-comment:before{
@@ -729,35 +732,35 @@ videogular, [videogular] {
                     }
 
                     &.icon-left:before{
-                        background-position: 0 -53px;
+                        background-position: 0 -30px;
                     }
 
                     &.icon-up:before{
-                        background-position: 0 -105px;
+                        background-position: 0 -60px;
                     }
 
                     &.icon-left_up:before{
-                        background-position: 0 -160px;
+                        background-position: 0 -94px;
                     }
 
                     &.icon-right_up:before{
-                        background-position: 0 -210px;
+                        background-position: 0 -120px;
                     }
 
                     &.icon-down:before{
-                        background-position: 0 -260px;
+                        background-position: 0 -155px;
                     }
 
                     &.icon-right_down:before{
-                        background-position: 0 -310px;
+                        background-position: 0 -188px;
                     }
 
                     &.icon-left_down:before{
-                        background-position: 0 -365px;
+                        background-position: 0 -218px;
                     }
 
                     &.icon-right:before{
-                        background-position: 0 -417px;
+                        background-position: 0 -251px;
                     }
                 }
             }

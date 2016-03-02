@@ -10,6 +10,11 @@ vg-scrub-bar-cue-points.chapters .cue-point {
 vg-scrub-bar-cue-points.thumbnails .cue-point {
   background-color: orange !important; }
 
+.main-container {
+  position: relative;
+  overflow: hidden;
+  padding-top: 70px; }
+
 div.menu {
   padding: 10px;
   font-size: 16px;

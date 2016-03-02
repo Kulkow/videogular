@@ -4,26 +4,25 @@
         <div class="col-lg-1">
             <points-menu></points-menu>
         </div>
-        <div class="col-lg-5">
+        <div class="col-lg-5" ng-repeat="config in ctrl.videoConfigs">
             <div class="videogular-container-points">
-                <videogular vg-player-ready="ctrl.onPlayerReady($API)"
-                            vg-theme="ctrl.config.theme.url"
-                            vg-cue-points="ctrl.config.cuePoints"
-                            vg-update-state="ctrl.onUpdateState($state)"
+                <videogular vg-player-ready="ctrl.onPlayerReady($API,'left')"
+                            vg-theme="config.theme.url"
+                            vg-cue-points="config.cuePoints"
+                            vg-update-state="ctrl.onUpdateState($state,'left')"
                             vg-update-time="ctrl.onUpdateTime($currentTime, $duration)"
                         >
-                    <vg-media vg-src="ctrl.config.sources">
+                    <vg-media vg-src="config.sources">
                     </vg-media>
 
-                    <vg-controls vg-autohide="ctrl.config.autoHide" vg-autohide-time="ctrl.config.autoHideTime">
+                    <vg-controls vg-autohide="config.autoHide" vg-autohide-time="config.autoHideTime">
                         <vg-play-pause-button></vg-play-pause-button>
                         <vg-time-display>{{ currentTime | date:'mm:ss' }}</vg-time-display>
                         <vg-scrub-bar>
                             <vg-scrub-bar-buffer></vg-scrub-bar-buffer>
                             <vg-scrub-bar-current-time></vg-scrub-bar-current-time>
-                            <vg-scrub-bar-thumbnails vg-thumbnails="ctrl.thumbnails"></vg-scrub-bar-thumbnails>
                             <vg-scrub-bar-cue-points class="chapters"
-                                                     vg-cue-points="ctrl.config.cuePoints.chapters"></vg-scrub-bar-cue-points>
+                                                     vg-cue-points="config.cuePoints.chapters"></vg-scrub-bar-cue-points>
                         </vg-scrub-bar>
                         <vg-time-display>{{ timeLeft | date:'mm:ss' }}</vg-time-display>
                         <vg-volume>
@@ -33,23 +32,32 @@
                         <vg-fullscreen-button></vg-fullscreen-button>
                     </vg-controls>
 
-                    <vg-poster vg-url='ctrl.config.plugins.poster.url'></vg-poster>
+                    <vg-poster vg-url='config.plugins.poster.url'></vg-poster>
                     <vg-buffering></vg-buffering>
                     <vg-overlay-play></vg-overlay-play>
                     <points-map-plugin></points-map-plugin>
                 </videogular>
-                <p ng-bind="ctrl.consoleCuePointsMessages" class="messages"></p>
+                <div class="checkbox">
+                    <label>
+                        <input  ng-change="ctrl.setSync" ng-model="ctrl.sync" type="checkbox" name="sync" value="1" />
+                        Synchronously
+                    </label>
+                </div>
             </div>
         </div>
         <div class="col-lg-5">
-           <!-- <videogular vg-player-ready="ctrl.onPlayerReadyRight($API)" vg-theme="ctrl.config.theme.url">
-                <vg-media vg-src="ctrl.config.sourcesRight">
+            <videogular vg-theme="ctrl.videoConfigsRight.theme"
+                        vg-loop="ctrl.videoConfigsRight.loop"
+                        vg-player-ready="ctrl.onPlayerReady($API,'right')"
+                        vg-update-state="ctrl.onUpdateState($state,'right')"
+                        >
+                <vg-media vg-src="ctrl.videoConfigsRight.sources">
                 </vg-media>
-
-                <vg-controls>
+                <vg-controls vg-autohide="ctrl.videoConfigsRight.autoHide" vg-autohide-time="ctrl.videoConfigsRight.autoHideTime">
                     <vg-play-pause-button></vg-play-pause-button>
                     <vg-time-display>{{ currentTime | date:'mm:ss' }}</vg-time-display>
                     <vg-scrub-bar>
+                        <vg-scrub-bar-buffer></vg-scrub-bar-buffer>
                         <vg-scrub-bar-current-time></vg-scrub-bar-current-time>
                     </vg-scrub-bar>
                     <vg-time-display>{{ timeLeft | date:'mm:ss' }}</vg-time-display>
@@ -60,9 +68,10 @@
                     <vg-fullscreen-button></vg-fullscreen-button>
                 </vg-controls>
 
-                <vg-overlay-play></vg-overlay-play>
+                <vg-poster vg-url='ctrl.videoConfigsRight.plugins.poster.url'></vg-poster>
                 <vg-buffering></vg-buffering>
-            </videogular> -->
+                <vg-overlay-play></vg-overlay-play>
+            </videogular>
         </div>
         <div class="col-lg-1">
         </div>

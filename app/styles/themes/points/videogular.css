@@ -502,33 +502,36 @@ videogular, [videogular] {
   display: block; }
   .container-points .left-sidebar ul li {
     position: relative;
-    list-style: none; }
+    list-style: none;
+    width: 100%; }
     .container-points .left-sidebar ul li .icon {
       position: relative;
-      display: block; }
+      display: block;
+      padding: 5px 15px; }
       .container-points .left-sidebar ul li .icon:before {
         content: "";
-        background: url("images/sprite_icon_50.png") no-repeat 0 0;
-        width: 50px;
-        height: 50px;
-        display: block; }
+        background: url("images/sprite_icon_30.png") no-repeat 0 0;
+        width: 30px;
+        height: 30px;
+        display: block;
+        margin: 0 auto; }
       .container-points .left-sidebar ul li .icon.icon-comment:before {
         background-position: 0 3px; }
       .container-points .left-sidebar ul li .icon.icon-left:before {
-        background-position: 0 -53px; }
+        background-position: 0 -30px; }
       .container-points .left-sidebar ul li .icon.icon-up:before {
-        background-position: 0 -105px; }
+        background-position: 0 -60px; }
       .container-points .left-sidebar ul li .icon.icon-left_up:before {
-        background-position: 0 -160px; }
+        background-position: 0 -94px; }
       .container-points .left-sidebar ul li .icon.icon-right_up:before {
-        background-position: 0 -210px; }
+        background-position: 0 -120px; }
       .container-points .left-sidebar ul li .icon.icon-down:before {
-        background-position: 0 -260px; }
+        background-position: 0 -155px; }
       .container-points .left-sidebar ul li .icon.icon-right_down:before {
-        background-position: 0 -310px; }
+        background-position: 0 -188px; }
       .container-points .left-sidebar ul li .icon.icon-left_down:before {
-        background-position: 0 -365px; }
+        background-position: 0 -218px; }
       .container-points .left-sidebar ul li .icon.icon-right:before {
-        background-position: 0 -417px; }
+        background-position: 0 -251px; }
 
 /*# sourceMappingURL=videogular.css.map */
