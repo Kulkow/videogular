@@ -71,7 +71,17 @@ angular.module('myApp').controller('PointsCtrl',
         this.onChaptersCuePoint = function onChaptersCuePoint(currentTime, timeLapse, params) {
             for (var i = 0, l = this.points.length; i < l; i++) {
                 if(i != params.index){
-                    this.points[i].status = 0;
+                    if(currentTime >= this.points[i].start) {
+                        if (!!this.points[i].end) {
+                            if (currentTime > this.points[i].end) {
+                                this.points[i].status = 0;
+                            }
+                        } else {
+                            this.points[i].status = 0;
+                        }
+                    }else{
+                        this.points[i].status = 0;
+                    }
                 }
             }
             var status = 0;
@@ -86,56 +96,29 @@ angular.module('myApp').controller('PointsCtrl',
             this.API.seekTime(this.chapterSelected.value);
         };
 
-        /*
-        this.changeCuePoints = function changeCuePoints() {
-            this.config.cuePoints = {
-                console: [
-                    {
-                        timeLapse: {
-                            start: 30
-                        },
-                        onEnter: this.onConsoleCuePoint.bind(this),
-                        onLeave: this.onConsoleCuePoint.bind(this),
-                        onUpdate: this.onConsoleCuePoint.bind(this),
-                        onComplete: this.onConsoleCuePoint.bind(this),
-                        params: {
-                            message: "hello dude!"
-                        }
-                    },
-                    {
-                        timeLapse: {
-                            start: 34
-                        },
-                        onEnter: this.onConsoleCuePoint.bind(this),
-                        onLeave: this.onConsoleCuePoint.bind(this),
-                        onUpdate: this.onConsoleCuePoint.bind(this),
-                        onComplete: this.onConsoleCuePoint.bind(this),
-                        params: {
-                            message: "cue points are awesome"
-                        }
-                    },
-                    {
-                        timeLapse: {
-                            start: 40
-                        },
-                        onEnter: this.onConsoleCuePoint.bind(this),
-                        onLeave: this.onConsoleCuePoint.bind(this),
-                        onUpdate: this.onConsoleCuePoint.bind(this),
-                        onComplete: this.onConsoleCuePoint.bind(this),
-                        params: {
-                            message: "(ノ・◡・)ノ"
-                        }
-                    }
-                ]
-            };
-        };
-        */
-
         this.points = [
             {type:'left', x : '0%', y: '0%', content : '<p>Точка 1</p>',label : '1', start : 7, status : 0},
             {type:'right', x : '50%', y: '0%', content : '<p>Точка 2</p>',label : '2', start: 14, status : 0},
             {type:'top', x : '90%', y: '90%', content : '<p>Точка 3</p>', label : '3', start: 30, end: 40, status : 0},
+            {type:'left', x : '50%', y: '90%', content : '<p>Точка 4</p>', label : '4', start: 35, end: 50, status : 0},
         ];
+
+        var actions = [
+            'left',
+            'left_up',
+            'up',
+            'right_up',
+            'right',
+            'right_down',
+            'down',
+            'left_down',
+        ];
+
+        this.menu = [];
+        for (var i = 0, l = actions.length; i < l; i++) {
+            var action = actions[i];
+            this.menu.push({'icon' : action, 'url' : '/points/'+action,});
+        }
 
         var _chapters = [];
 
@@ -158,6 +141,7 @@ angular.module('myApp').controller('PointsCtrl',
             _chapters.push(chapter);
         }
 
+        this.thumbnails = "assets/thumbnails/thumbnail.jpg";
         this.config = {
             playsInline: false,
             autoHide: false,
@@ -172,26 +156,9 @@ angular.module('myApp').controller('PointsCtrl',
                 url: "styles/themes/points/videogular.css"
             },
             cuePoints: {
+                console : [],
                 chapters: _chapters,
-                thumbnails: [
-                    {
-                        timeLapse: {
-                            start: 30
-                        },
-                        params: {
-                            thumbnail: "assets/thumbnails/30.png"
-                        }
-                    },
-                    {
-                        timeLapse: {
-                            start: 49,
-                            end: 60
-                        },
-                        params: {
-                            thumbnail: "assets/thumbnails/50.png"
-                        }
-                    }
-                ]
+                thumbnails: []
             },
             plugins: {
                 poster: {
@@ -211,5 +178,17 @@ angular.module('myApp').controller('PointsCtrl',
             }
         }
     }
-    ]);
-;
+    ]
+).directive('pointsMenu',
+    ["$location", function ($location) {
+        return {
+            restrict: "E",
+            templateUrl: "views/directives/points-menu.html",
+            link: function (scope, elem, attr) {
+                scope.$location = $location;
+            }
+        }
+    }
+    ]
+);
+

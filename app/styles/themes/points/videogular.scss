@@ -122,7 +122,7 @@ videogular, [videogular] {
         max-width: 100%;
         max-height: 100%;
         position: absolute;
-        z-index: 5;
+        z-index: 2;
         top: 0;
     }
 
@@ -634,7 +634,7 @@ videogular, [videogular] {
     points-map-plugin {
         position: absolute;
         display: block;
-        z-index: 2;
+        z-index: 1;
         top: 0;
         font-size:16px;
         color:red;
@@ -658,4 +658,19 @@ videogular, [videogular] {
         }
     }
 }
+
+.container-points{
+    .left-sidebar{
+        ul{
+            display: block;
+
+            li{
+                .icon{
+                    background: url('images-');
+                }
+            }
+        }
+    }
+}
+
 

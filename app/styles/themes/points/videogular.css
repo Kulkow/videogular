@@ -107,7 +107,7 @@ videogular, [videogular] {
     max-width: 100%;
     max-height: 100%;
     position: absolute;
-    z-index: 5;
+    z-index: 2;
     top: 0; }
   videogular vg-overlay-play .play:before, [videogular] vg-overlay-play .play:before {
     content: "\e000"; }
@@ -458,7 +458,7 @@ videogular, [videogular] {
   videogular points-map-plugin, [videogular] points-map-plugin {
     position: absolute;
     display: block;
-    z-index: 2;
+    z-index: 1;
     top: 0;
     font-size: 16px;
     color: red;
@@ -476,5 +476,10 @@ videogular, [videogular] {
         padding: 3px;
         background: #fff;
         opacity: 0.7; }
+
+.container-points .left-sidebar ul {
+  display: block; }
+  .container-points .left-sidebar ul li .icon {
+    background: url("images-"); }
 
 /*# sourceMappingURL=videogular.css.map */

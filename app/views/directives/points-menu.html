@@ -1,10 +1,7 @@
-<div class="menu" ng-init="actions=[{icon:'left',},
-                            {icon:'right',}
-                            {icon:'top',}
-                            ]">
+<div class="left-sidebar" ng-controller="PointsCtrl">
     <ul>
-        <li ng-repeat="li in actions">
-            <a href="#/" ng-class="{selected: ('/' == $location.path())}">Main</a>
+        <li ng-repeat="item in ctrl.menu">
+            <a href="#{{item.url}}" class="icon {{item.icon}}" ng-class="{selected: (item.url == $location.path())}"></a>
         </li>
     </ul>
 </div>
