@@ -16,14 +16,28 @@ angular.module('myApp').controller('PointsCtrl',
         this.points = [];
         this.sync = 0;
         this.videosAPI = [];
+        this.diff = 0;
 
         this.onUpdateState = function (state, type) {
             this.state = state;
-            var sync_type = ('left' == type ? 'right' : 'left')
-            var VAPI = this.videosAPI[sync_type];
-            if(this.sync){
-                if(VAPI.currentState != state){
+            if(this.sync) {
+                this.setSync(state, type);
+            }
+        };
+
+        /**
+         * Sync left -> right
+         * */
+        this.setSync = function(state, type){
+            if (!!this.videosAPI.left && !!this.videosAPI.right) {
+                var sync_type = 'left' == type ? 'right' : 'left';
+                var VAPI = this.videosAPI[sync_type];
+                var VAPI_SYNC = this.videosAPI[type];
+                var _diff = Math.abs(VAPI_SYNC.currentTime - VAPI.currentTime);
+                if (VAPI.currentState != state) {
                     VAPI.currentState = state;
+                    this.diff = _diff;
+                    console.log('setState:');
                     switch (state) {
                         case 'play':
                             VAPI.play()
@@ -39,7 +53,7 @@ angular.module('myApp').controller('PointsCtrl',
                     }
                 }
             }
-        };
+        }
 
         var ctrl = this;
         this.onPlayerReady = function (API, type) {
@@ -51,10 +65,31 @@ angular.module('myApp').controller('PointsCtrl',
             if('left' == type) {
                 $http.post(this.pointsUrl, data, config).then(function (response) {
                     ctrl.setPoints(response.data.points);
+                    //set points
                 }, function () {
+                    //error ajax
                 });
             }
         };
+
+        this.changeSync = function(){
+            if(this.sync) {
+                if (!!this.videosAPI.left){
+                    this.setSync(this.videosAPI.left.currentState, 'left');
+                }
+            }
+        }
+        this.TimeSync = function(){
+            var VAPI = this.videosAPI['left'];
+            var VAPI_SYNC = this.videosAPI['right'];
+            var _diff = Math.abs(VAPI_SYNC.currentTime - VAPI.currentTime);
+            var _change =Math.abs(this.diff - _diff);
+            if(Math.abs(this.diff - _diff) > 1000){ //разница более сек
+                console.log('current_:'+VAPI_SYNC.currentTime);
+                console.log('DIFF2:'+(VAPI_SYNC.currentTime + this.diff));
+                VAPI_SYNC.seekTime((VAPI_SYNC.currentTime + this.diff)/1000, true);
+            }
+        }
 
         this.media = {
             left: [
@@ -65,7 +100,7 @@ angular.module('myApp').controller('PointsCtrl',
                 ],
             right :  [
                     {
-                        src: $sce.trustAsResourceUrl("/assets/video/videogular.mp4"),
+                        src: $sce.trustAsResourceUrl("/assets/video/videogular2.mp4"),
                         type: "video/mp4"
                     }
                 ]
@@ -123,6 +158,9 @@ angular.module('myApp').controller('PointsCtrl',
 
         this.onUpdateTime = function (currentTime, totalTime) {
             this.statusPoints(currentTime);
+            if(this.sync){
+                this.TimeSync(currentTime);
+            }
         };
 
 
@@ -194,8 +232,9 @@ angular.module('myApp').controller('PointsCtrl',
         this.videoConfigs = [this.commonConfig];
 
         var config = angular.copy(this.commonConfig);
-        config.sources = this.media.right
+        config.sources = this.media.right;
         this.videoConfigsRight = config;
+        console.log(this.videoConfigsRight);
     }
 ).directive("pointsMapPlugin",
     ["VG_STATES", function(VG_STATES) {
